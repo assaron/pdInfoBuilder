@@ -25,12 +25,12 @@ typeDictTable <- list(col2type=c(
                         ))
 
 exonTranscriptionFeatureSetSchema <- list(col2type=c(
-                                            fsetid="INTEGER",
+                                            fsetid="VARCHAR(80)",
                                             strand="INTEGER",
                                             start="INTEGER",
                                             stop="INTEGER",
-                                            transcript_cluster_id="INTEGER",
-                                            exon_id="INTEGER",
+                                            transcript_cluster_id="VARCHAR(80)",
+                                            exon_id="VARCHAR(80)",
                                             crosshyb_type="INTEGER",
                                             level="INTEGER",
                                             chrom="INTEGER",
@@ -46,7 +46,7 @@ exonTranscriptionFeatureSetSchema <- list(col2type=c(
 ## apparently fid in gene arrays can't be key?
 exonTranscriptionPmFeatureSchema <- list(col2type=c(
                                            fid="INTEGER",
-                                           fsetid="INTEGER",
+                                           fsetid="VARCHAR(80)",
                                            atom="INTEGER",
                                            x="INTEGER",
                                            y="INTEGER"
@@ -57,7 +57,7 @@ exonTranscriptionPmFeatureSchema <- list(col2type=c(
 
 genePmFeatureSchema <- list(col2type=c(
                               fid="INTEGER",
-                              fsetid="INTEGER",
+                              fsetid="VARCHAR(80)",
                               atom="INTEGER",
                               x="INTEGER",
                               y="INTEGER"
@@ -69,7 +69,7 @@ genePmFeatureSchema <- list(col2type=c(
 
 exonTranscriptionMmFeatureSchema <- list(col2type=c(
                                            fid="INTEGER",
-                                           fsetid="INTEGER",
+                                           fsetid="VARCHAR(80)",
                                            atom="INTEGER",
                                            x="INTEGER",
                                            y="INTEGER"
@@ -80,7 +80,7 @@ exonTranscriptionMmFeatureSchema <- list(col2type=c(
 
 exonTranscriptionBgFeatureSchema <- list(col2type=c(
                                            fid="INTEGER",
-                                           fsetid="INTEGER",
+                                           fsetid="VARCHAR(80)",
                                            fs_type="TEXT",
                                            f_type="TEXT",
                                            x="INTEGER",
@@ -92,7 +92,7 @@ exonTranscriptionBgFeatureSchema <- list(col2type=c(
 
 geneBgFeatureSchema <- list(col2type=c(
                               fid="INTEGER",
-                              fsetid="INTEGER",
+                              fsetid="VARCHAR(80)",
                               fs_type="TEXT",
                               f_type="TEXT",
                               x="INTEGER",
@@ -103,8 +103,8 @@ geneBgFeatureSchema <- list(col2type=c(
                               ))
 
 mpsSchema <- list(col2type=c(
-                    meta_fsetid="INTEGER",
-                    transcript_cluster_id="INTEGER",
+                    meta_fsetid="VARCHAR(80)",
+                    transcript_cluster_id="VARCHAR(80)",
                     fsetid="INTEGER"
                     ),
                   col2key=c(
