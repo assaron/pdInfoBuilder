@@ -25,7 +25,8 @@ typeDictTable <- list(col2type=c(
                         ))
 
 exonTranscriptionFeatureSetSchema <- list(col2type=c(
-                                            fsetid="VARCHAR(80)",
+                                            fsetid="INTEGER",
+                                            man_fsetid="VARCHAR(80)",
                                             strand="INTEGER",
                                             start="INTEGER",
                                             stop="INTEGER",
@@ -46,7 +47,7 @@ exonTranscriptionFeatureSetSchema <- list(col2type=c(
 ## apparently fid in gene arrays can't be key?
 exonTranscriptionPmFeatureSchema <- list(col2type=c(
                                            fid="INTEGER",
-                                           fsetid="VARCHAR(80)",
+                                           fsetid="INTEGER",
                                            atom="INTEGER",
                                            x="INTEGER",
                                            y="INTEGER"
@@ -57,7 +58,7 @@ exonTranscriptionPmFeatureSchema <- list(col2type=c(
 
 genePmFeatureSchema <- list(col2type=c(
                               fid="INTEGER",
-                              fsetid="VARCHAR(80)",
+                              fsetid="INTEGER",
                               atom="INTEGER",
                               x="INTEGER",
                               y="INTEGER"
@@ -69,7 +70,7 @@ genePmFeatureSchema <- list(col2type=c(
 
 exonTranscriptionMmFeatureSchema <- list(col2type=c(
                                            fid="INTEGER",
-                                           fsetid="VARCHAR(80)",
+                                           fsetid="INTEGER",
                                            atom="INTEGER",
                                            x="INTEGER",
                                            y="INTEGER"
@@ -80,7 +81,7 @@ exonTranscriptionMmFeatureSchema <- list(col2type=c(
 
 exonTranscriptionBgFeatureSchema <- list(col2type=c(
                                            fid="INTEGER",
-                                           fsetid="VARCHAR(80)",
+                                           fsetid="INTEGER",
                                            fs_type="TEXT",
                                            f_type="TEXT",
                                            x="INTEGER",
@@ -92,7 +93,7 @@ exonTranscriptionBgFeatureSchema <- list(col2type=c(
 
 geneBgFeatureSchema <- list(col2type=c(
                               fid="INTEGER",
-                              fsetid="VARCHAR(80)",
+                              fsetid="INTEGER",
                               fs_type="TEXT",
                               f_type="TEXT",
                               x="INTEGER",
@@ -200,7 +201,8 @@ parseProbesetCSV <- function(probeFile, verbose=TRUE){
             "transcript_cluster_id", "exon_id",
             "crosshyb_type", "level", "probeset_type")
   probesets <- probesets[, cols]
-  cols[1] <- "fsetid"
+  # probeset_id stands for man_fsetid (string id) in probeset.csv file
+  cols[1] <- "man_fsetid"
   names(probesets) <- cols
   rm(cols)
 
@@ -300,6 +302,12 @@ combinePgfClfProbesetsMps <- function(pgfFile, clfFile, probeFile,
       ## chrom
       ## type
       featureSet <- probesetInfo[["probesets"]]
+
+      # adding fsetid (integer id) column
+      featureSet[["fsetid"]] <- probes.table$fsetid[match(featureSet[["man_fsetid"]], probes.table$man_fsetid)]
+
+      
+
       missFeatureSet <- setdiff(unique(probes.table[["fsetid"]]),
                                 unique(featureSet[["fsetid"]]))
       if (length(missFeatureSet) > 0){
@@ -452,6 +460,10 @@ combinePgfClfProbesetsMps0 <- function(pgfFile, clfFile, probeFile,
   ## chrom
   ## type
   featureSet <- probesetInfo[["probesets"]]
+
+  # adding fsetid (integer id) column
+  featureSet[["fsetid"]] <- probes.table$fsetid[match(featureSet[["man_fsetid"]], probes.table$man_fsetid)]
+
   missFeatureSet <- setdiff(unique(probes.table[["fsetid"]]),
                             unique(featureSet[["fsetid"]]))
   if (length(missFeatureSet) > 0){
